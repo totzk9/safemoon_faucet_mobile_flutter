@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:safemoon_faucet_mobile_flutter/constants/custom_colors.dart';
 import 'package:safemoon_faucet_mobile_flutter/controllers/home_controller.dart';
@@ -115,14 +114,16 @@ class HomeScreen extends StatelessWidget {
                       color: CustomColors.text,
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  Text(
-                    '\$0.000004060',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 21,
-                      fontFamily: 'Monsterrat SemiBold',
-                      color: CustomColors.text,
+                  const SizedBox(height: 32),
+                  Obx(
+                    () => Text(
+                      '\$${controller.currentPrice.string}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontFamily: 'Monsterrat SemiBold',
+                        color: CustomColors.text,
+                      ),
                     ),
                   ),
                   const Text(
@@ -134,14 +135,16 @@ class HomeScreen extends StatelessWidget {
                       color: CustomColors.text,
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  Text(
-                    '\$2,354,861,850.18',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 21,
-                      fontFamily: 'Monsterrat SemiBold',
-                      color: CustomColors.text,
+                  const SizedBox(height: 32),
+                  Obx(
+                        () => Text(
+                          '\$${controller.marketCap.string}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontFamily: 'Monsterrat SemiBold',
+                        color: CustomColors.text,
+                      ),
                     ),
                   ),
                   const Text(

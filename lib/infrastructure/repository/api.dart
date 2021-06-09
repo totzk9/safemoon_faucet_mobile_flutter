@@ -1,99 +1,26 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
 class Api {
-  Api() {
-    _headers = <String, String>{
-      'Authorization': '203042',
-      'Content-type': 'application/json',
-      'Accept': 'application/json'
-    };
+  factory Api() {
+    return _instance;
   }
 
-  final String baseUrl = '';
-  Map<String, String> _headers;
-  bool preventRefreshOfTokens = false;
-  StreamController<bool> tokenStatusStream = StreamController<bool>();
+  Api._internal();
 
-  /// Convert [params] to URL query string.
-  ///
-  ///
-  String _toQueryString(Map<String, dynamic> params) {
-    if (params != null && params.isNotEmpty) {
-      final List<String> list = <String>[];
+  static final Api _instance = Api._internal();
 
-      params.forEach((String k, dynamic v) => list.add('$k=$v'));
-
-      return '?' + list.join('&');
-    } else {
-      return '';
-    }
-  }
+  final String url = 'https://api.coinranking.com/v2/coin/';
+  final Map<String, String> _headers = <String, String>{
+    'x-access-token':
+        'coinranking319ae0db0bed03a9b2c99768f7cfb4909db70c2ed2558d6d',
+    'Content-type': 'application/json'
+  };
 
   /// Http GET request.
   ///
   ///
-  Future<http.Response> get(
-    String endpoint, {
-    Map<String, dynamic> params,
-  }) async {
-    final String query = _toQueryString(params);
-    final http.Response res = await http.get(
-      Uri.parse('$baseUrl/$endpoint$query'),
-      headers: _headers,
-    );
-
-    return res;
-  }
-
-  /// Http PUT request.
-  ///
-  ///
-  Future<http.Response> put(
-    String endpoint, {
-    Map<String, dynamic> params,
-    dynamic body,
-  }) async {
-    final String query = _toQueryString(params);
-    final http.Response res = await http.post(
-      Uri.parse('$baseUrl/$endpoint$query'),
-      body: body == null ? '' : jsonEncode(body),
-      headers: _headers,
-    );
-    return res;
-  }
-
-  Future<http.Response> patch(
-    String endpoint, {
-    Map<String, dynamic> params,
-    dynamic body,
-  }) async {
-    final String query = _toQueryString(params);
-    final http.Response res = await http.post(
-      Uri.parse('$baseUrl/$endpoint$query'),
-      body: body == null ? null : jsonEncode(body),
-      headers: _headers,
-    );
-    return res;
-  }
-
-  /// Http POST request.
-  ///
-  ///
-  Future<http.Response> post(
-    String endpoint, {
-    Map<String, dynamic> params,
-    dynamic body,
-  }) async {
-    final String query = _toQueryString(params);
-    final http.Response res = await http.post(
-      Uri.parse('$baseUrl/$endpoint$query'),
-      body: body == null ? '' : jsonEncode(body),
-      headers: _headers,
-    );
-
-    return res;
-  }
+  Future<http.Response> get(String endpoint) async =>
+      await http.get(Uri.parse('$url$endpoint'), headers: _headers);
 }
