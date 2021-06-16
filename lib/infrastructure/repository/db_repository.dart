@@ -4,15 +4,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 
 class DBRepository {
-  factory DBRepository() {
-    return _instance;
-  }
-
-  DBRepository._internal();
-
-  static final DBRepository _instance = DBRepository._internal();
-
-  Box<dynamic> box;
+  factory DBRepository() => _instance ??= DBRepository._();
+  DBRepository._();
+  static DBRepository? _instance;
+  late Box<dynamic> box;
 
   Future<void> init() async {
     final Directory appDocDirectory = await getApplicationDocumentsDirectory();
